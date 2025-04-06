@@ -616,10 +616,10 @@ function startRecording() {
       document.querySelector(".group").style.height = "100%";
       document.querySelector(".group").style.transform = "none";
       document.querySelector(".clairo").style.display = "flex";
-      const feedbackText = generateFeedback(analysisResults);
+      const feedback = generateFeedback(analysisResults);
 
       document.querySelector(".clairo").addEventListener("click", () => {
-        playFeedbackWithLipsync(feedbackText);
+        playFeedbackWithLipsync(feedback);
       });
 
       // Show transcript with fade-in effect
