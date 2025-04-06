@@ -608,7 +608,7 @@ function startRecording() {
       document.querySelector(".clairo").style.display = "flex";
 
       const feedbackText = generateFeedback(analysisResults);
-      playFeedbackWithLipsync(feedbackText);
+      // playFeedbackWithLipsync(feedbackText);
 
       // Show transcript with fade-in effect
       const transcript = document.querySelector(".transcript");
