@@ -1,5 +1,5 @@
 const AUDIO_FILE_URL = "assets/clairo-greeting.mp3";
-const MOUTHMAP_JSON = "assets/clairo-mouthmap.json";
+const MOUTHMAP_JSON = "assets/clairo-phonemes.json";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const clairoDiv = document.querySelector(".clairo");
