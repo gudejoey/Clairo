@@ -464,8 +464,8 @@ function createFeedbackHTML(data) {
         <span>Pace:</span>
         <div class="meter">
           <div class="meter-fill" style="width: ${Math.min(
-            90,
-            data.toneMetrics.pace * 9
+            100,
+            data.toneMetrics.pace * 10
           )}%"></div>
         </div>
         <span>${data.toneMetrics.pace.toFixed(1)}/10</span>
@@ -474,8 +474,8 @@ function createFeedbackHTML(data) {
         <span>Volume:</span>
         <div class="meter">
           <div class="meter-fill" style="width: ${Math.min(
-            90,
-            data.toneMetrics.pace * 9
+            100,
+            data.toneMetrics.volume * 10
           )}%"></div>
         </div>
         <span>${data.toneMetrics.volume.toFixed(1)}/10</span>
@@ -485,8 +485,8 @@ function createFeedbackHTML(data) {
         <span>Pitch Variation:</span>
         <div class="meter">
           <div class="meter-fill" style="width: ${Math.min(
-            90,
-            data.toneMetrics.pace * 9
+            100,
+            data.toneMetrics.variation * 10
           )}%"></div>
         </div>
         <span>${data.toneMetrics.variation.toFixed(1)}/10</span>
