@@ -36,6 +36,7 @@ button {
 .group {
     height: 36vw;
     width: 100%;
+    transform: translateY(-3rem);
 }
 
 .hero {
@@ -48,8 +49,4 @@ button {
     background-color: #FFFFFF;
     overflow: scroll;
     padding: 1rem;
-}
-
-.textbox p {
-    font-family: 'Inter', sans-serif;
 }
