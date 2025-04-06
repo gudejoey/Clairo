@@ -31,7 +31,7 @@ async function playFeedbackWithLipsync(text) {
   const interval = setInterval(() => {
     face.textContent = showingSmile ? ":D" : ":)";
     showingSmile = !showingSmile;
-  }, 250); // Toggle every 250ms
+  }, 150); // Toggle every 250ms
 
   audio.play();
   audio.addEventListener("ended", () => {
