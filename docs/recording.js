@@ -140,6 +140,7 @@ async function elevenLabsTTS(text) {
       loader.style.display = "none";
       return null;
     }
+    
 
     const blob = await response.blob();
     const url = URL.createObjectURL(blob);
