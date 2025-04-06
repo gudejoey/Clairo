@@ -5,6 +5,8 @@ const recorded = document.getElementById("recorded");
 const startBtn = document.getElementById("start");
 const loader = document.getElementById("loader");
 
+let generatedFeedbackAudio = null;
+
 let stream;
 let mediaRecorder;
 let recordedChunks = [];
@@ -77,11 +79,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Function to animate the lips in the Clairo face
 async function playFeedbackWithLipsync(text) {
-  if (!text) return;
-
   const face = document.querySelector(".face");
-  const audio = await elevenLabsTTS(text);
-  if (!face || !audio) return;
+  if (!face) return;
+
+  let audio = generatedFeedbackAudio;
+
+  if (!audio) {
+    audio = await elevenLabsTTS(text);
+    generatedFeedbackAudio = audio; // Save it for reuse
+  }
+
+  if (!audio) return;
 
   const context = new AudioContext();
   const source = context.createMediaElementSource(audio);
@@ -102,6 +110,8 @@ async function playFeedbackWithLipsync(text) {
     }
   }
 
+  // Reset audio if it's already played once
+  audio.currentTime = 0;
   audio.play();
   context.resume();
   checkAudioEnergy();
@@ -606,8 +616,9 @@ function startRecording() {
       document.querySelector(".group").style.height = "100%";
       document.querySelector(".group").style.transform = "none";
       document.querySelector(".clairo").style.display = "flex";
+      const feedbackText = generateFeedback(analysisResults);
+
       document.querySelector(".clairo").addEventListener("click", () => {
-        const feedbackText = generateFeedback(analysisResults);
         playFeedbackWithLipsync(feedbackText);
       });
 
@@ -661,6 +672,7 @@ function resetUI() {
   // Hide feedback elements
   document.querySelector(".clairo").style.display = "none";
   document.querySelector(".transcript").style.display = "none";
+  generatedFeedbackAudio = null;
 
   // Show recording elements
   preview.style.display = "block";
