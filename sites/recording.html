@@ -22,11 +22,12 @@
       <article class="hero">
         <div class="left">
           <video id="preview" autoplay playsinline muted></video>
+          <video id="recorded" controls style="display: none"></video>
           <canvas id="canvas"></canvas>
         </div>
         <div class="right">
           <div class="group">
-            <p>Please read this passage aloud</p>
+            <p class="direction">Please read this passage aloud</p>
             <div class="textbox">
               <p>
                 Have you ever tried to say a sentence so tricky, it ties your
@@ -49,7 +50,25 @@
                 about getting better, one twist at a time.
               </p>
             </div>
-            <button class="btn">Start recording</button>
+            <button id="start" class="btn">Start recording</button>
+            <div id="loader" style="display: none">
+              Analyzing your speech...
+            </div>
+            <div class="clairo" style="display: none"><p>:)</p></div>
+
+            <div class="textbox transcript" style="display: none">
+              <p>
+                Placeholder transcript & feedback from Clairo. This is where AI
+                analysis and tips will appear after your recording. blah blah
+                <br />
+                blah blah <br />blah blah <br />blah blah <br />blah blah
+                <br />blah blah <br />blah blah <br />blah blah <br />blah blah
+                <br />blah blah <br />blah blah <br />blah blah <br />blah blah
+                <br />blah blah <br />blah blah <br />blah blah <br />
+              </p>
+            </div>
+
+            <div id="results"></div>
           </div>
         </div>
       </article>

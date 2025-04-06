@@ -12,7 +12,7 @@ canvas {
     height: 36vw;
 }
 
-video {
+#preview {
     transform: scaleX(-1);
 }
 
@@ -36,6 +36,12 @@ button {
 .group {
     height: 36vw;
     width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     transform: translateY(-3rem);
 }
 
@@ -49,4 +55,16 @@ button {
     background-color: #FFFFFF;
     overflow: scroll;
     padding: 1rem;
+}
+
+.clairo {
+    margin-top: 6vh;
+    margin-bottom: 4rem;
+}
+
+.transcript {
+    height: auto;
+    max-height: 45vh;
+    /* overflow-y: auto; */
+    width: 100%;
 }
