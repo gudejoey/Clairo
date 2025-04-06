@@ -19,56 +19,25 @@ async function setupCamera() {
 
 setupCamera();
 
-// async function playFeedbackWithLipsync(text) {
-//   const audio = await elevenLabsTTS(text);
-//   const face = document.querySelector(".face");
-
-//   if (!face || !audio) return;
-
-//   // Start speaking and animate :D / :) alternation
-//   let showingSmile = true;
-//   face.textContent = ":)";
-//   const interval = setInterval(() => {
-//     face.textContent = showingSmile ? ":D" : ":)";
-//     showingSmile = !showingSmile;
-//   }, 150); // Toggle every 250ms
-
-//   audio.play();
-//   audio.addEventListener("ended", () => {
-//     clearInterval(interval);
-//     face.textContent = ":)";
-//   });
-// }
-
 async function playFeedbackWithLipsync(text) {
   const audio = await elevenLabsTTS(text);
   const face = document.querySelector(".face");
+
   if (!face || !audio) return;
 
-  const context = new AudioContext();
-  const source = context.createMediaElementSource(audio);
-  const analyser = context.createAnalyser();
-  source.connect(analyser);
-  analyser.connect(context.destination);
-
-  const data = new Uint8Array(analyser.frequencyBinCount);
-
-  function checkAudioEnergy() {
-    analyser.getByteFrequencyData(data);
-    const avg = data.reduce((sum, v) => sum + v, 0) / data.length;
-
-    // Adjust threshold if needed
-    face.textContent = avg > 15 ? ":D" : ":)";
-    if (!audio.paused && !audio.ended) {
-      requestAnimationFrame(checkAudioEnergy);
-    } else {
-      face.textContent = ":)";
-    }
-  }
+  // Start speaking and animate :D / :) alternation
+  let showingSmile = true;
+  face.textContent = ":)";
+  const interval = setInterval(() => {
+    face.textContent = showingSmile ? ":D" : ":)";
+    showingSmile = !showingSmile;
+  }, 250); // Toggle every 250ms
 
   audio.play();
-  context.resume(); // Required for autoplay in some browsers
-  checkAudioEnergy();
+  audio.addEventListener("ended", () => {
+    clearInterval(interval);
+    face.textContent = ":)";
+  });
 }
 
 async function elevenLabsTTS(text) {
