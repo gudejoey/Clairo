@@ -72,7 +72,7 @@ button {
 .textbox.transcript {
     min-height: 350px;
     /* You can increase this */
-    max-height: 600px;
+    max-height: 500px;
     /* Optional: limits how tall it can grow */
     overflow-y: scroll;
     /* Scroll if content overflows */
