@@ -606,8 +606,7 @@ function startRecording() {
       document.querySelector(".group").style.height = "100%";
       document.querySelector(".group").style.transform = "none";
       document.querySelector(".clairo").style.display = "flex";
-        playFeedbackWithLipsync(feedbackText);
-      });
+      playFeedbackWithLipsync(feedbackText);
 
       // Show transcript with fade-in effect
       const transcript = document.querySelector(".transcript");
