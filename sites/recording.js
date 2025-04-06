@@ -60,9 +60,21 @@ startBtn.onclick = () => {
     const videoUrl = URL.createObjectURL(blob);
     recorded.src = videoUrl;
 
+    // Replace preview with playback
     preview.style.display = "none";
     recorded.style.display = "block";
-    startBtn.style.display = "none"; // Hide button after recording
+
+    // Hide record button
+    startBtn.style.display = "none";
+
+    // Hide the reading textbox
+    document.querySelector(".textbox").style.display = "none";
+    document.querySelector(".direction").style.display = "none";
+
+    // Show the Clairo face and transcript feedback
+    document.querySelector(".group").style.height = "100%";
+    document.querySelector(".clairo").style.display = "flex";
+    document.querySelector(".transcript").style.display = "block";
   };
 
   mediaRecorder.start();

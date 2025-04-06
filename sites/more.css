@@ -36,6 +36,10 @@ button {
 .group {
     height: 36vw;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     transform: translateY(-3rem);
 }
 
@@ -49,4 +53,12 @@ button {
     background-color: #FFFFFF;
     overflow: scroll;
     padding: 1rem;
+}
+
+.clairo {
+    margin-top: 6vh;
+}
+
+.transcript {
+    height: 50%;
 }
