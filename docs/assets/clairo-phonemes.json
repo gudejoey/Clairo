@@ -1,19 +1,17 @@
 [
   { "face": ":D", "start": 0.02 },
-  { "face": ":)", "start": 1.23 },
-  { "face": ":D", "start": 1.35 },
-  { "face": ":)", "start": 2.10 },
+  { "face": ":)", "start": 2.15 },
   { "face": ":D", "start": 2.99 },
-  { "face": ":)", "start": 6.44 },
+  { "face": ":)", "start": 6.52 },
   { "face": ":D", "start": 7.01 },
-  { "face": ":)", "start": 8.26 },
+  { "face": ":)", "start": 8.32 },
   { "face": ":D", "start": 8.50 },
-  { "face": ":)", "start": 11.80 },
+  { "face": ":)", "start": 11.86 },
   { "face": ":D", "start": 12.55 },
-  { "face": ":)", "start": 15.85 },
+  { "face": ":)", "start": 15.93 },
   { "face": ":D", "start": 16.35 },
-  { "face": ":)", "start": 17.57 },
+  { "face": ":)", "start": 17.63 },
   { "face": ":D", "start": 18.20 },
-  { "face": ":)", "start": 19.21 }
+  { "face": ":)", "start": 19.25 }
   
 ]
