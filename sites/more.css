@@ -1,0 +1,25 @@
+:root {
+    --green: #7DB900;
+    --dimgreen: #5d9900;
+    --white: #eeeeee;
+    --black: #101010;
+    /* --green: #C880B7; */
+}
+
+video,
+canvas {
+    width: 320;
+    height: 240;
+}
+
+video {
+    transform: scaleX(-1);
+}
+
+canvas {
+    display: none;
+}
+
+button {
+    width: 100%;
+}
