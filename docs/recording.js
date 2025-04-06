@@ -5,6 +5,9 @@ const recorded = document.getElementById("recorded");
 const startBtn = document.getElementById("start");
 const loader = document.getElementById("loader");
 
+let cachedFeedbackAudioBlob = null;
+let cachedPhonemeSchedule = null;
+
 let stream;
 let mediaRecorder;
 let recordedChunks = [];
@@ -464,8 +467,8 @@ function createFeedbackHTML(data) {
         <span>Pace:</span>
         <div class="meter">
           <div class="meter-fill" style="width: ${Math.min(
-            90,
-            data.toneMetrics.pace * 9
+            100,
+            data.toneMetrics.pace * 10
           )}%"></div>
         </div>
         <span>${data.toneMetrics.pace.toFixed(1)}/10</span>
@@ -474,8 +477,8 @@ function createFeedbackHTML(data) {
         <span>Volume:</span>
         <div class="meter">
           <div class="meter-fill" style="width: ${Math.min(
-            90,
-            data.toneMetrics.pace * 9
+            100,
+            data.toneMetrics.pace * 10
           )}%"></div>
         </div>
         <span>${data.toneMetrics.volume.toFixed(1)}/10</span>
@@ -485,8 +488,8 @@ function createFeedbackHTML(data) {
         <span>Pitch Variation:</span>
         <div class="meter">
           <div class="meter-fill" style="width: ${Math.min(
-            90,
-            data.toneMetrics.pace * 9
+            100,
+            data.toneMetrics.pace * 10
           )}%"></div>
         </div>
         <span>${data.toneMetrics.variation.toFixed(1)}/10</span>
@@ -606,10 +609,13 @@ function startRecording() {
       document.querySelector(".group").style.height = "100%";
       document.querySelector(".group").style.transform = "none";
       document.querySelector(".clairo").style.display = "flex";
-      document.querySelector(".clairo").addEventListener("click", () => {
-        const feedbackText = generateFeedback(analysisResults);
+
+      const feedbackText = generateFeedback(analysisResults);
+      const clairoFace = document.querySelector(".clairo");
+
+      clairoFace.onclick = () => {
         playFeedbackWithLipsync(feedbackText);
-      });
+      };
 
       // Show transcript with fade-in effect
       const transcript = document.querySelector(".transcript");
