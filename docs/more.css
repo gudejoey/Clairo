@@ -9,7 +9,7 @@
 video,
 canvas {
     width: 48vw;
-    height: 36vw; 
+    height: 36vw;
 }
 
 #preview {
@@ -67,4 +67,15 @@ button {
     max-height: 45vh;
     /* overflow-y: auto; */
     width: 100%;
+}
+
+.textbox.transcript {
+    min-height: 200px;
+    /* You can increase this */
+    max-height: 400px;
+    /* Optional: limits how tall it can grow */
+    overflow-y: auto;
+    /* Scroll if content overflows */
+    padding: 1rem;
+    font-size: 1rem;
 }
