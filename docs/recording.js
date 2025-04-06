@@ -42,10 +42,13 @@ async function setupCamera() {
     });
     preview.srcObject = stream;
 
-    // Setup audio analysis
-    setupAudioAnalysis(stream);
+    // Add these two lines:
+    await preview.play();
+    preview.onloadeddata = () => {
+      console.log("Camera ready");
+    };
 
-    // Show start button once camera is ready
+    setupAudioAnalysis(stream);
     startBtn.classList.add("ready");
     startBtn.disabled = false;
   } catch (err) {
