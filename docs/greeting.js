@@ -1,7 +1,7 @@
 // greeting.js (Simplified version using only :D and :) animation)
 
 const AUDIO_FILE_URL = "assets/clairo-greeting.mp3";
-const SPEAK_INTERVAL = 300; // duration to toggle face during speaking (ms)
+const SPEAK_INTERVAL = 100; // duration to toggle face during speaking (ms)
 
 document.addEventListener("DOMContentLoaded", () => {
   const clairoDiv = document.querySelector(".clairo");
