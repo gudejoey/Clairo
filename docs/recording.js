@@ -42,40 +42,39 @@ document.addEventListener("DOMContentLoaded", () => {
   startBtn.textContent = "Getting camera ready...";
 });
 
-// Function to animate the lips in the Clairo face
-async function playFeedbackWithLipsync(text) {
-  const audio = await elevenLabsTTS(text);
-  const face = document.querySelector(".face");
+let clairoIsSpeaking = false;
 
+async function playFeedbackWithLipsync(text) {
+  if (clairoIsSpeaking) return;
+  clairoIsSpeaking = true;
+
+  const face = document.querySelector(".face");
+  const audio = await elevenLabsTTS(text);
   if (!face || !audio) return;
 
-  // Add transition for smoother animation
-  face.style.transition = "transform 0.2s";
+  const context = new AudioContext();
+  const source = context.createMediaElementSource(audio);
+  const analyser = context.createAnalyser();
+  source.connect(analyser);
+  analyser.connect(context.destination);
 
-  // Start speaking and animate between expressions
-  let showingSmile = true;
-  face.textContent = ":)";
+  const data = new Uint8Array(analyser.frequencyBinCount);
 
-  const interval = setInterval(() => {
-    if (showingSmile) {
-      face.textContent = ":D";
-      face.style.transform = "scale(1.1)";
+  function checkAudioEnergy() {
+    analyser.getByteFrequencyData(data);
+    const avg = data.reduce((sum, v) => sum + v, 0) / data.length;
+    face.textContent = avg > 15 ? ":D" : ":)";
+    if (!audio.paused && !audio.ended) {
+      requestAnimationFrame(checkAudioEnergy);
     } else {
       face.textContent = ":)";
-      face.style.transform = "scale(1)";
+      clairoIsSpeaking = false;
     }
-    showingSmile = !showingSmile;
-  }, 300); // Slightly slower for more natural look
+  }
 
-  // Play the audio
   audio.play();
-
-  // Clean up when done
-  audio.addEventListener("ended", () => {
-    clearInterval(interval);
-    face.textContent = ":)";
-    face.style.transform = "scale(1)";
-  });
+  context.resume();
+  checkAudioEnergy();
 }
 
 // Get audio feedback from Eleven Labs
