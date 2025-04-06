@@ -23,7 +23,7 @@ async function setupCamera() {
       audio: true,
     });
     preview.srcObject = stream;
-    
+
     // Show start button once camera is ready
     startBtn.classList.add("ready");
     startBtn.disabled = false;
@@ -36,7 +36,7 @@ async function setupCamera() {
 // Initialize camera on page load
 document.addEventListener("DOMContentLoaded", () => {
   setupCamera();
-  
+
   // Set initial button state
   startBtn.disabled = true;
   startBtn.textContent = "Getting camera ready...";
@@ -55,7 +55,7 @@ async function playFeedbackWithLipsync(text) {
   // Start speaking and animate between expressions
   let showingSmile = true;
   face.textContent = ":)";
-  
+
   const interval = setInterval(() => {
     if (showingSmile) {
       face.textContent = ":D";
@@ -69,7 +69,7 @@ async function playFeedbackWithLipsync(text) {
 
   // Play the audio
   audio.play();
-  
+
   // Clean up when done
   audio.addEventListener("ended", () => {
     clearInterval(interval);
@@ -82,7 +82,7 @@ async function playFeedbackWithLipsync(text) {
 async function elevenLabsTTS(text) {
   loader.textContent = "Generating feedback...";
   loader.style.display = "block";
-  
+
   const API_KEY = "sk_b5b77653bf1cc410ea40387c22eca72efe4db1e7322e83ac";
   const VOICE_ID = "cgSgspJ2msm6clMCkdW9";
 
@@ -152,7 +152,7 @@ function startRecording() {
   // Update UI
   startBtn.textContent = "Stop Recording";
   startBtn.style.backgroundColor = "#c44536";
-  
+
   // Add a pulse animation to the button
   startBtn.classList.add("recording");
 
@@ -178,7 +178,7 @@ function startRecording() {
     // Show loading state
     loader.style.display = "block";
     loadingInterval = setInterval(updateLoadingText, 500);
-    
+
     // Process recording
     const blob = new Blob(recordedChunks, { type: "video/webm" });
     const videoUrl = URL.createObjectURL(blob);
@@ -196,12 +196,12 @@ function startRecording() {
       // Clear loading indicator
       clearInterval(loadingInterval);
       loader.style.display = "none";
-      
+
       // Show feedback UI
       document.querySelector(".group").style.height = "100%";
       document.querySelector(".group").style.transform = "none";
       document.querySelector(".clairo").style.display = "flex";
-      
+
       // Show transcript with fade-in effect
       const transcript = document.querySelector(".transcript");
       transcript.style.display = "block";
@@ -219,20 +219,15 @@ function startRecording() {
         <p>Keep practicing — you're improving with every recording!</p>
         <button id="tryAgain" class="btn">Try Again</button>
       `;
-      
+
       // Fade in the transcript
       setTimeout(() => {
         transcript.style.transition = "opacity 0.5s ease-in";
         transcript.style.opacity = "1";
       }, 100);
-      
+
       // Add event listener to the "Try Again" button
       document.getElementById("tryAgain").addEventListener("click", resetUI);
-
-      // Generate and play feedback
-      const feedbackText = 
-        "Great job! You spoke clearly, but try slowing down in the middle. Keep practicing — you're improving every time.";
-      await playFeedbackWithLipsync(feedbackText);
     }, 2500);
   };
 
@@ -241,6 +236,18 @@ function startRecording() {
   // Update button to stop recording
   startBtn.onclick = stopRecording;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const clairo = document.querySelector(".clairo");
+
+  if (clairo) {
+    clairo.addEventListener("click", () => {
+      const feedbackText =
+        "Great job! You spoke clearly, but try slowing down in the middle. Keep practicing — you're improving every time.";
+      playFeedbackWithLipsync(feedbackText);
+    });
+  }
+});
 
 // Stop recording function
 function stopRecording() {
@@ -257,23 +264,23 @@ function resetUI() {
   // Hide feedback elements
   document.querySelector(".clairo").style.display = "none";
   document.querySelector(".transcript").style.display = "none";
-  
+
   // Show recording elements
   preview.style.display = "block";
   recorded.style.display = "none";
   startBtn.style.display = "block";
   document.querySelector(".textbox").style.display = "block";
   document.querySelector(".direction").style.display = "block";
-  
+
   // Reset button
   startBtn.textContent = "Start recording";
   startBtn.style.backgroundColor = "var(--green)";
   startBtn.classList.remove("recording");
-  
+
   // Reset group styling
   document.querySelector(".group").style.height = "36vw";
   document.querySelector(".group").style.transform = "translateY(-3rem)";
-  
+
   // Set button click handler back to start recording
   startBtn.onclick = startRecording;
 }
@@ -282,7 +289,7 @@ function resetUI() {
 startBtn.onclick = startRecording;
 
 // Add some CSS dynamically for the recording animation
-const style = document.createElement('style');
+const style = document.createElement("style");
 style.innerHTML = `
   .btn.recording {
     animation: pulse 1.5s infinite;
