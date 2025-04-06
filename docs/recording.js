@@ -606,6 +606,8 @@ function startRecording() {
       document.querySelector(".group").style.height = "100%";
       document.querySelector(".group").style.transform = "none";
       document.querySelector(".clairo").style.display = "flex";
+
+      const feedbackText = generateFeedback(analysisResults);
       playFeedbackWithLipsync(feedbackText);
 
       // Show transcript with fade-in effect
@@ -626,7 +628,7 @@ function startRecording() {
       document.getElementById("tryAgain").addEventListener("click", resetUI);
 
       // Generate and play feedback audio
-      const feedbackText = generateFeedback(analysisResults);
+
       await playFeedbackWithLipsync(feedbackText);
     } catch (err) {
       console.error("Analysis error:", err);
