@@ -690,7 +690,7 @@ style.innerHTML = `
   
   @keyframes pulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    50% { transform: scale(1.01); }
     100% { transform: scale(1); }
   }
   
