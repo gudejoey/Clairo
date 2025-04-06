@@ -1,6 +1,5 @@
 const preview = document.getElementById("preview");
 const canvas = document.getElementById("canvas");
-import { OPENAI_KEY } from "./config.js";
 const ctx = canvas.getContext("2d");
 const recorded = document.getElementById("recorded");
 const startBtn = document.getElementById("start");
@@ -65,31 +64,6 @@ function setupAudioAnalysis(stream) {
   // Configure analyser
   audioAnalyser.fftSize = 2048;
   audioAnalyser.smoothingTimeConstant = 0.8;
-}
-
-async function makeFeedbackMoreHuman(feedbackText) {
-  const prompt = `Make this feedback sound more human, warm, and encouraging:\n\n"${feedbackText}"`;
-
-  try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.7,
-      }),
-    });
-
-    const json = await response.json();
-    return json.choices[0].message.content.trim();
-  } catch (err) {
-    console.error("OpenAI rewording failed:", err);
-    return feedbackText; // fallback to original
-  }
 }
 
 // Initialize camera on page load
@@ -632,9 +606,6 @@ function startRecording() {
       document.querySelector(".group").style.height = "100%";
       document.querySelector(".group").style.transform = "none";
       document.querySelector(".clairo").style.display = "flex";
-      document.querySelector(".clairo").addEventListener("click", async () => {
-        const rawFeedbackText = generateFeedback(analysisResults);
-        const feedbackText = await makeFeedbackMoreHuman(rawFeedbackText);
         playFeedbackWithLipsync(feedbackText);
       });
 
