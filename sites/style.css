@@ -141,6 +141,16 @@ nav a {
     width: 200px;
     height: 200px;
     border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.clairo p {
+    color: var(--white);
+    writing-mode: vertical-rl;
+    font-size: 6rem;
+    transform: translateY(1rem);
 }
 
 .hero h1 {
