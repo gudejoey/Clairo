@@ -32,7 +32,8 @@ a:hover {
     color: var(--dimgreen);
 }
 
-button:hover {
+button,
+.clairo:hover {
     background-color: var(--dimgreen);
 }
 

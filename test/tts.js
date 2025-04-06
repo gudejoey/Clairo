@@ -1,4 +1,5 @@
 const API_KEY = "sk_b5b77653bf1cc410ea40387c22eca72efe4db1e7322e83ac";
+
 const VOICE_ID = "cgSgspJ2msm6clMCkdW9"; // e.g., Rachel, Bella, etc.
 
 async function speak() {
