@@ -1,7 +1,7 @@
 // greeting.js (Final: JSON-based animation)
 
-const AUDIO_FILE_URL = "../assets/clairo-greeting.mp3";
-const PHONEME_JSON_URL = "../assets/clairo-phonemes.json";
+const AUDIO_FILE_URL = "assets/clairo-greeting.mp3";
+const PHONEME_JSON_URL = "assets/clairo-phonemes.json";
 
 const visemeMap = {
   A: ["AA", "AH", "AO"],
