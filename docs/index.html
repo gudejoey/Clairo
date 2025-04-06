@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Clairo</title>
+    <link rel="icon" type="image/x-icon" href="assets/favi.png" />
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,24 +16,29 @@
   <body>
     <nav>
       <a class="logo" href="index.html">Clairo</a>
-      <a class="login" href="login.html">Login</a>
     </nav>
     <main>
       <article class="hero">
         <div class="left">
-          <h1 class="title">Meet Clairo</h1>
+          <h1 class="title"><span class="italic">Meet Clairo</span></h1>
           <p class="subtitle">
-            Clairo is an advanced AI tool made to help people who deal with
-            stuttering. By analyzing where you stutter the most or need more
-            help with, Clairo gives tips, resources, and prompts. Over time, you
-            will speak more clear and concise.
+            Clairo is an AI tool that helps users improve their clarity, pacing,
+            and confidence in speech. By analyzing tone, pauses, and delivery,
+            Clairo gives personalized feedback and lets users practice with
+            flexible prompts. A smarter way to become a better speaker — one
+            word at a time.
           </p>
-          <button class="btn">Get Started</button>
+          <a href="recording.html"><button class="btn">Try it out!</button></a>
         </div>
         <div class="right">
-          <div class="clairo"></div>
+          <div class="clairo">
+            <p class="face">:)</p>
+            <img src="assets/arrow.png" />
+            <p id="pressme">Press me!</p>
+          </div>
         </div>
       </article>
     </main>
+    <script src="greeting.js"></script>
   </body>
 </html>
