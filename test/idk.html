@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Phoneme JSON Extractor</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        max-width: 600px;
+        margin: 2rem auto;
+      }
+      input,
+      button,
+      textarea {
+        margin-top: 1rem;
+        width: 100%;
+      }
+      textarea {
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Upload MP3/WAV → Get Phoneme JSON (Deepgram)</h1>
+    <input type="file" id="audioInput" accept="audio/mp3, audio/wav" />
+    <textarea
+      id="transcript"
+      placeholder="Paste transcript here (required for accuracy)"
+    ></textarea>
+    <button onclick="uploadToDeepgram()">Upload & Process</button>
+    <p id="status"></p>
+    <a id="downloadLink" style="display: none" download="clairo-phonemes.json"
+      >Download JSON</a
+    >
+
+    <script>
+      const API_KEY = "1a4f2d0c8a3296944125ec37928a4e74b6ffb3e4"; // Replace with your API key
+
+      async function uploadToDeepgram() {
+        const fileInput = document.getElementById("audioInput");
+        const transcript = document.getElementById("transcript").value.trim();
+        const status = document.getElementById("status");
+        const link = document.getElementById("downloadLink");
+
+        if (!fileInput.files[0]) {
+          status.textContent = "Please select an audio file.";
+          return;
+        }
+        if (!transcript) {
+          status.textContent = "Please provide the transcript.";
+          return;
+        }
+
+        status.textContent = "Uploading and processing...";
+
+        const file = fileInput.files[0];
+        const encodedText = encodeURIComponent(transcript);
+
+        try {
+          const res = await fetch(
+            `https://api.deepgram.com/v1/listen?punctuate=true&utterances=true&text=${encodedText}`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Token ${API_KEY}`,
+                "Content-Type": file.type || "audio/mp3",
+              },
+              body: file,
+            }
+          );
+
+          const json = await res.json();
+
+          if (!json.results || !json.results.channels) {
+            status.textContent = "Error: " + (json.error || "Invalid response");
+            console.error(json);
+            return;
+          }
+
+          const phonemes = [];
+          const words = json.results.channels[0].alternatives[0].words;
+
+          for (let word of words) {
+            if (word.phones) {
+              for (let phone of word.phones) {
+                phonemes.push({ phoneme: phone.phone, start: phone.start });
+              }
+            }
+          }
+
+          if (phonemes.length === 0) {
+            status.textContent =
+              "No phonemes found. Try uploading a .wav version.";
+            return;
+          }
+
+          const blob = new Blob([JSON.stringify(phonemes, null, 2)], {
+            type: "application/json",
+          });
+          link.href = URL.createObjectURL(blob);
+          link.style.display = "inline-block";
+          status.textContent = "Done! Download your JSON below:";
+        } catch (err) {
+          console.error(err);
+          status.textContent = "Error occurred while uploading.";
+        }
+      }
+    </script>
+  </body>
+</html>
