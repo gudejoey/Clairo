@@ -73,6 +73,7 @@ startBtn.onclick = () => {
 
     // Show the Clairo face and transcript feedback
     document.querySelector(".group").style.height = "100%";
+    document.querySelector(".group").style.transform = "none";
     document.querySelector(".clairo").style.display = "flex";
     document.querySelector(".transcript").style.display = "block";
   };
