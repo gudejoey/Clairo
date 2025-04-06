@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "elevenlabs": "^1.56.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.3"
+  }
+}
