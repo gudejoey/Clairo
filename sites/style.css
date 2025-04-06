@@ -92,7 +92,7 @@ nav a {
 }
 
 .hero {
-    padding: 5vh 10vw 0 15vw;
+    padding: 5vh 10vw 0 10vw;
     padding: 20vh 10vw 20vh 15vw;
     display: flex;
     justify-content: center;
@@ -148,11 +148,31 @@ nav a {
     flex-shrink: 0;
 }
 
-.clairo p {
+.hero .clairo {
+    margin-left: 4rem;
+}
+
+.clairo .face {
+    position: absolute;
     color: var(--white);
     writing-mode: vertical-rl;
     font-size: 6rem;
     transform: translateY(1rem);
+}
+
+.clairo #pressme {
+    font-family: "Libre Baskerville", serif;
+    position: absolute;
+    color: var(--green);
+    font-size: 2rem;
+    transform: translate(-130px, -140px);
+}
+
+.clairo img {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50px, -120px);
 }
 
 .hero h1 {
