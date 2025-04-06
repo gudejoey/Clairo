@@ -1,9 +1,7 @@
 [
   { "face": ":D", "start": 0.02 },
-  { "face": ":)", "start": 0.61 },
-  { "face": ":D", "start": 0.80 },
   { "face": ":)", "start": 1.12 },
-  { "face": ":D", "start": 1.25 },
+  { "face": ":D", "start": 1.20 },
   { "face": ":)", "start": 2.00 },
   { "face": ":D", "start": 2.70 },
   { "face": ":)", "start": 6.12 },
@@ -14,6 +12,6 @@
   { "face": ":D", "start": 16.62 },
   { "face": ":)", "start": 17.60 },
   { "face": ":D", "start": 18.05 },
-  { "face": ":)", "start": 18.80 }
+  { "face": ":)", "start": 19.30 }
   
 ]
