@@ -76,11 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Function to animate the lips in the Clairo face
-let clairoIsSpeaking = false;
-
 async function playFeedbackWithLipsync(text) {
-  if (clairoIsSpeaking) return;
-  clairoIsSpeaking = true;
+  if (!text) return;
 
   const face = document.querySelector(".face");
   const audio = await elevenLabsTTS(text);
@@ -102,7 +99,6 @@ async function playFeedbackWithLipsync(text) {
       requestAnimationFrame(checkAudioEnergy);
     } else {
       face.textContent = ":)";
-      clairoIsSpeaking = false;
     }
   }
 
@@ -467,18 +463,20 @@ function createFeedbackHTML(data) {
       <div class="metric">
         <span>Pace:</span>
         <div class="meter">
-          <div class="meter-fill" style="width: ${
-            data.toneMetrics.pace * 10
-          }%"></div>
+          <div class="meter-fill" style="width: ${Math.min(
+            90,
+            data.toneMetrics.pace * 9
+          )}%"></div>
         </div>
         <span>${data.toneMetrics.pace.toFixed(1)}/10</span>
       </div>
       <div class="metric">
         <span>Volume:</span>
         <div class="meter">
-          <div class="meter-fill" style="width: ${
-            data.toneMetrics.volume * 10
-          }%"></div>
+          <div class="meter-fill" style="width: ${Math.min(
+            90,
+            data.toneMetrics.pace * 9
+          )}%"></div>
         </div>
         <span>${data.toneMetrics.volume.toFixed(1)}/10</span>
 
@@ -487,8 +485,8 @@ function createFeedbackHTML(data) {
         <span>Pitch Variation:</span>
         <div class="meter">
           <div class="meter-fill" style="width: ${Math.min(
-            100,
-            data.toneMetrics.pace * 10
+            90,
+            data.toneMetrics.pace * 9
           )}%"></div>
         </div>
         <span>${data.toneMetrics.variation.toFixed(1)}/10</span>
@@ -608,6 +606,10 @@ function startRecording() {
       document.querySelector(".group").style.height = "100%";
       document.querySelector(".group").style.transform = "none";
       document.querySelector(".clairo").style.display = "flex";
+      document.querySelector(".clairo").addEventListener("click", () => {
+        const feedbackText = generateFeedback(analysisResults);
+        playFeedbackWithLipsync(feedbackText);
+      });
 
       // Show transcript with fade-in effect
       const transcript = document.querySelector(".transcript");
