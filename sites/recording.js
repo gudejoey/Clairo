@@ -3,8 +3,6 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const recorded = document.getElementById("recorded");
 const startBtn = document.getElementById("start");
-const stopBtn = document.getElementById("stop");
-const formData = new FormData();
 
 let stream;
 let mediaRecorder;
@@ -21,18 +19,26 @@ async function setupCamera() {
 
 setupCamera();
 
-function drawFlippedVideo() {
+function drawVideo() {
+  canvas.width = preview.videoWidth;
+  canvas.height = preview.videoHeight;
+
   ctx.save();
-  ctx.scale(-1, 1); // mirror horizontally
-  ctx.drawImage(preview, -canvas.width, 0, canvas.width, canvas.height);
+  ctx.translate(canvas.width, 0); // Flip horizontally
+  ctx.scale(-1, 1);
+  ctx.drawImage(preview, 0, 0, canvas.width, canvas.height);
   ctx.restore();
-  animationFrame = requestAnimationFrame(drawFlippedVideo);
+
+  animationFrame = requestAnimationFrame(drawVideo);
 }
 
 startBtn.onclick = () => {
-  drawFlippedVideo();
+  drawVideo();
 
-  // Capture canvas (flipped video) and combine audio
+  // Change button to stop recording
+  startBtn.textContent = "Stop Recording";
+  startBtn.style.backgroundColor = "#c44536";
+
   const canvasStream = canvas.captureStream();
   const audioTrack = stream.getAudioTracks()[0];
   const combinedStream = new MediaStream([
@@ -46,61 +52,24 @@ startBtn.onclick = () => {
   mediaRecorder.ondataavailable = (event) => {
     if (event.data.size > 0) {
       recordedChunks.push(event.data);
-      console.log("Chunk received:", event.data.size);
-    } else {
-      console.log("Empty chunk received.");
     }
   };
 
   mediaRecorder.onstop = () => {
-    console.log("Recorded chunks:", recordedChunks);
-    const blob = new Blob(recordedChunks, { type: "audio/webm" });
-    console.log("Blob size:", blob.size);
-    if (blob.size === 0) {
-      console.error("No data recorded!");
-      return;
-    }
-    // ...rest of the code to send blob via FormData
-    // Send blob to Flask for Deepgram processing
-    const formData = new FormData();
-    formData.append("audio", blob, "recording.webm"); // Make sure to match your Flask route
+    const blob = new Blob(recordedChunks, { type: "video/webm" });
+    const videoUrl = URL.createObjectURL(blob);
+    recorded.src = videoUrl;
 
-    // Show loading message
-    const resultDiv = document.getElementById("results");
-    resultDiv.innerHTML = `<p>Analyzing your speech...</p>`;
-
-    fetch("http://127.0.0.1:5000/process", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        resultDiv.innerHTML = `
-          <h3>Fluency Analysis</h3>
-          <p><strong>Fluency Score:</strong> ${data.fluency_score}/100</p>
-          <p><strong>Filler Words:</strong> ${
-            data.filler_words.join(", ") || "None"
-          }</p>
-          <p><strong>Repeated Words:</strong> ${
-            data.repeated_words.join(", ") || "None"
-          }</p>
-        `;
-      })
-      .catch((err) => {
-        console.error("Error:", err);
-        resultDiv.innerHTML = `<p style="color:red;">Something went wrong while processing the audio.</p>`;
-      });
+    preview.style.display = "none";
+    recorded.style.display = "block";
+    startBtn.style.display = "none"; // Hide button after recording
   };
 
   mediaRecorder.start();
-  startBtn.disabled = true;
-  stopBtn.disabled = false;
-};
 
-stopBtn.onclick = () => {
-  mediaRecorder.stop();
-  startBtn.disabled = false;
-  stopBtn.disabled = true;
+  // Change button behavior to stop recording
+  startBtn.onclick = () => {
+    mediaRecorder.stop();
+    cancelAnimationFrame(animationFrame);
+  };
 };
-
-formData.append("audio", blob, "recording.wav"); // Deepgram supports wav, mp3, etc.

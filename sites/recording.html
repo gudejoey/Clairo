@@ -22,6 +22,7 @@
       <article class="hero">
         <div class="left">
           <video id="preview" autoplay playsinline muted></video>
+          <video id="recorded" controls style="display: none"></video>
           <canvas id="canvas"></canvas>
         </div>
         <div class="right">
@@ -49,7 +50,12 @@
                 about getting better, one twist at a time.
               </p>
             </div>
-            <button class="btn">Start recording</button>
+            <button id="start" class="btn">Start recording</button>
+
+            <div id="loader" style="display: none">
+              Analyzing your speech...
+            </div>
+            <div id="results"></div>
           </div>
         </div>
       </article>
